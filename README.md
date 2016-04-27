@@ -22,3 +22,5 @@ mvn clean install
 ```
 
 To use newly created jar with [docker-selenium](https://github.com/sskorol/docker-selenium), just copy it into corresponding [Base/lib](https://github.com/sskorol/docker-selenium/tree/master/Base/lib) folder and rebuild required chain of images.
+
+[![demo](http://img.youtube.com/vi/f73ea4-RVHo/0.jpg)](http://www.youtube.com/watch?v=f73ea4-RVHo)
