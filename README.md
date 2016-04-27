@@ -1,5 +1,5 @@
 # Selenium server with video recording feature
-This project is created to provide native video recording support for Selenium Grid and designed to be used with [docker-selenium](https://github.com/sskorol/docker-selenium) project.
+This project is created to provide native video recording support for Selenium Grid and designed to be used with [docker-selenium](https://github.com/sskorol/docker-selenium) project. See details in related [article](http://qa-automation-notes.blogspot.com/2016/04/docker-selenium-and-bit-of-allure-how.html).
 
 It uses [avconv](https://libav.org/avconv.html) tool to produce mp4 output. The entire recording process is managed on selenium session level.
 
