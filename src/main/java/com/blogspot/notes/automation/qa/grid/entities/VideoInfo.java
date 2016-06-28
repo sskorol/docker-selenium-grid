@@ -1,5 +1,7 @@
 package com.blogspot.notes.automation.qa.grid.entities;
 
+import java.awt.*;
+
 /**
  * Author: Serhii Korol.
  */
@@ -10,10 +12,14 @@ public class VideoInfo {
 	private int quality;
 	private int frameRate;
 
+	private final Dimension screenSize;
+
 	public VideoInfo() {
+		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	}
 
 	public VideoInfo(final String storagePath, final String fileName, final int quality, final int frameRate) {
+		this();
 		this.storagePath = storagePath;
 		this.fileName = fileName;
 		this.quality = quality;
@@ -50,5 +56,9 @@ public class VideoInfo {
 
 	public void setFrameRate(final int frameRate) {
 		this.frameRate = frameRate;
+	}
+
+	public String getResolution() {
+		return (int) screenSize.getWidth() + "x" + (int) screenSize.getHeight();
 	}
 }
