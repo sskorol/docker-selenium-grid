@@ -1,7 +1,9 @@
 # Selenium server with video recording feature
-This project is created to provide native video recording support for Selenium Grid and designed to be used with [docker-selenium](https://github.com/sskorol/docker-selenium) project. See details in related [article](http://qa-automation-notes.blogspot.com/2016/04/docker-selenium-and-bit-of-allure-how.html).
+This project is created to provide native video recording support for Selenium Grid and was initially designed to be used with [docker-selenium](https://github.com/sskorol/docker-selenium) project. See details in related [article](http://qa-automation-notes.blogspot.com/2016/04/docker-selenium-and-bit-of-allure-how.html).
 
-It uses [avconv](https://libav.org/avconv.html) tool to produce mp4 output. The entire recording process is managed on selenium session level.
+As Docker will be available on Windows soon, initial approach was extended for supporting corresponding OS. Technically, now you can use it on Windows even without Docker.
+
+[ffmpeg](https://ffmpeg.org) tool is used to produce mp4 output. The entire recording process is managed on selenium session level.
 
 `VideoInfo` entity is designed to supply required video options to be able to control output paths, quality and frame rate. As there's no easy way to extend official selenium sources, you should provide exactly the same entity on a client level and pass corresponding info in json format as a part of `DesiredCapabilities`.
 
@@ -14,6 +16,8 @@ firefoxnode:
  - ~/work:/e2e/uploads
  - ~/work/tmp:/e2e/uploads/tmp
 ```
+
+On Windows it's not required to map anything. Temporary folder will be created automatically, if it doesn't exist yet.
 
 To build this project use the following command:
 
