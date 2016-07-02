@@ -28,10 +28,10 @@ public final class VideoRecordingUtils {
 		final String tmpPath = info.getStoragePath() + "/tmp";
 		createTmpDirectory(tmpPath);
 		final String outputPath = parseFileName(tmpPath, info.getFileName(), "mp4");
-		final String display = SystemUtils.IS_OS_LINUX ? System.getenv("DISPLAY") : "video=\"screen-capture-recorder\"";
-		final String recorder = SystemUtils.IS_OS_LINUX ? "x11grab" : "dshow";
+		final String display = SystemUtils.IS_OS_LINUX ? System.getenv("DISPLAY") : "desktop";
+		final String recorder = SystemUtils.IS_OS_LINUX ? "x11grab" : "gdigrab";
 		final String[] commandsSequence = new String[]{
-				RECORDING_TOOL,
+				RECORDING_TOOL, "-y",
 				"-video_size", info.getResolution(),
 				"-f", recorder,
 				"-i", display,
