@@ -33,7 +33,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.openqa.grid.selenium.GridLauncher</mainClass>
+                            <mainClass>com.blogspot.notes.automation.qa.grid.core.CustomGridLauncher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

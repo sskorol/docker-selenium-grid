@@ -7,6 +7,7 @@ import org.zeroturnaround.exec.ProcessExecutor;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.concurrent.*;
 import java.util.logging.Logger;
 
@@ -17,15 +18,19 @@ import static org.apache.commons.io.FilenameUtils.separatorsToSystem;
  */
 public final class VideoRecordingUtils {
 
+	public static String SEND_CTRL_C_TOOL_PATH;
+	public static final String SEND_CTRL_C_TOOL_NAME = "SendSignalCtrlC.exe";
+
 	private static final Logger LOGGER = Logger.getLogger(VideoRecordingUtils.class.getName());
 	private static final String RECORDING_TOOL = "ffmpeg";
+	private static final String TMP_DIR_NAME = "tmp";
 
 	private VideoRecordingUtils() {
 		throw new UnsupportedOperationException("Illegal access to private constructor");
 	}
 
 	public static void startVideoRecording(final VideoInfo info) {
-		final String tmpPath = info.getStoragePath() + "/tmp";
+		final String tmpPath = info.getStoragePath() + File.separator + TMP_DIR_NAME;
 		createTmpDirectory(tmpPath);
 		final String outputPath = parseFileName(tmpPath, info.getFileName(), "mp4");
 		final String display = SystemUtils.IS_OS_LINUX ? System.getenv("DISPLAY") : "desktop";
@@ -53,12 +58,12 @@ public final class VideoRecordingUtils {
 	public static void stopVideoRecording() {
 		final String output = SystemUtils.IS_OS_LINUX ?
 				runCommand("pkill", "-INT", RECORDING_TOOL) :
-				runCommand("SendSignalCtrlC", getPidOf(RECORDING_TOOL));
+				runCommand(Optional.ofNullable(SEND_CTRL_C_TOOL_PATH).orElse(SEND_CTRL_C_TOOL_NAME), getPidOf(RECORDING_TOOL));
 		LOGGER.info("Stop recording output log: " + output);
 	}
 
 	private static void copyFile(final String storagePath, final String fileName) {
-		final String inputFileName = parseFileName(storagePath + "/tmp", fileName, "mp4");
+		final String inputFileName = parseFileName(storagePath + File.separator + TMP_DIR_NAME, fileName, "mp4");
 		final String outputFileName = parseFileName(storagePath, fileName, "mp4");
 		final String output = SystemUtils.IS_OS_LINUX ? runCommand("cp", inputFileName, outputFileName) :
 				runCommand("cmd", "/c", "copy", inputFileName, outputFileName);
@@ -81,7 +86,7 @@ public final class VideoRecordingUtils {
 
 	private static String parseFileName(final String storagePath, final String fileName, final String extension) {
 		if (!fileName.isEmpty() && !storagePath.isEmpty()) {
-			return separatorsToSystem(storagePath + "/" + fileName + "." + extension);
+			return separatorsToSystem(storagePath + File.separator + fileName + "." + extension);
 		}
 
 		throw new IllegalArgumentException("Unable to determine output file path");
