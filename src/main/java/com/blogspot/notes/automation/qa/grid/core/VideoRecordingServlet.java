@@ -2,8 +2,8 @@ package com.blogspot.notes.automation.qa.grid.core;
 
 import com.blogspot.notes.automation.qa.grid.entities.VideoInfo;
 import com.blogspot.notes.automation.qa.grid.enums.Command;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -71,7 +71,7 @@ public class VideoRecordingServlet extends HttpServlet
 			}
 		}
 
-		return new ObjectMapper().readValue(jsonBuilder.toString(), VideoInfo.class);
+		return new ObjectMapper().findAndRegisterModules().readValue(jsonBuilder.toString(), VideoInfo.class);
 	}
 
 	private void updateResponse(final HttpServletResponse response, final int status, final String message) throws IOException {

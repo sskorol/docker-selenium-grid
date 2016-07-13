@@ -1,6 +1,9 @@
 package com.blogspot.notes.automation.qa.grid.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.awt.*;
+import java.time.Duration;
 
 /**
  * Author: Serhii Korol.
@@ -11,6 +14,7 @@ public class VideoInfo {
 	private String fileName;
 	private int quality;
 	private int frameRate;
+	private Duration timeout;
 
 	private final Dimension screenSize;
 
@@ -18,12 +22,14 @@ public class VideoInfo {
 		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	}
 
-	public VideoInfo(final String storagePath, final String fileName, final int quality, final int frameRate) {
+	public VideoInfo(final String storagePath, final String fileName, final int quality, final int frameRate,
+					 final Duration timeout) {
 		this();
 		this.storagePath = storagePath;
 		this.fileName = fileName;
 		this.quality = quality;
 		this.frameRate = frameRate;
+		this.timeout = timeout;
 	}
 
 	public String getStoragePath() {
@@ -58,7 +64,28 @@ public class VideoInfo {
 		this.frameRate = frameRate;
 	}
 
+	@JsonIgnore
 	public String getResolution() {
 		return (int) screenSize.getWidth() + "x" + (int) screenSize.getHeight();
+	}
+
+	public Duration getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(final Duration timeout) {
+		this.timeout = timeout;
+	}
+
+	@Override
+	public String toString() {
+		return "VideoInfo{" +
+				"storagePath='" + getStoragePath() + '\'' +
+				", fileName='" + getFileName() + '\'' +
+				", quality=" + getQuality() +
+				", frameRate=" + getFrameRate() +
+				", timeout=" + getTimeout().getSeconds() +
+				", screenSize=" + getResolution() +
+				'}';
 	}
 }

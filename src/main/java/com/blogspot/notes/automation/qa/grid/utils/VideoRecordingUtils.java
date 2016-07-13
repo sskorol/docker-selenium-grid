@@ -44,6 +44,7 @@ public final class VideoRecordingUtils {
 				"-vcodec", "libx264",
 				"-crf", String.valueOf(info.getQuality()),
 				"-r", String.valueOf(info.getFrameRate()),
+				"-t", String.valueOf(info.getTimeout().getSeconds()),
 				outputPath
 		};
 
